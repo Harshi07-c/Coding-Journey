@@ -1,0 +1,47 @@
+  a) Solution which will work:
+  ListNode* rotateRight(ListNode* head, int k) {
+        if(!head||!(head->next)||k==0){
+            return head;
+        }
+        int len=1;
+        ListNode *tail=head;
+        while(tail->next){
+            tail=tail->next;
+            len++;
+        }
+        k%=len;
+        if(k%len==0){
+            return head;
+        }
+        ListNode *temp=head;
+        for(int i=0;i<len-k-1;i++){
+            temp=temp->next;
+        }
+        ListNode * h=temp->next;
+        temp->next=NULL;
+        tail->next=head;
+        return h;
+    }
+ 
+ 
+ b)Solution which will be compiled but will not give correct solution(My First Attempt):
+ ListNode* rotateRight(ListNode* head, int k) {
+        if(!head||!(head->next)){
+            return head;
+        }
+        ListNode *temp;
+        while(k--){
+           temp=head;
+           while(temp->next->next){
+            temp=temp->next;
+        }
+            temp->next->next=head;
+            head=temp->next->next;
+            temp->next=NULL;
+        }
+        return head;
+    }
+    
+    Error:
+    In line 38, the next of last node is made to point to the head and further the head is shifted to the last pointer which has now become the first pointer
+    
